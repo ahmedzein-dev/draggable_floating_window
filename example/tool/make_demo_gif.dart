@@ -12,7 +12,7 @@
 //                    and whose pixels change by at most 8N keep the previous
 //                    frame's pixels. This removes video compression noise,
 //                    so pauses compress well and can be shortened (default:
-//                    3, 0 turns it off)
+//                    5, 0 turns it off)
 //
 // Every frame shares one palette, so the parts of the screen that do not
 // change encode identically and an optimizer can drop them. Optimize the
@@ -50,7 +50,7 @@ void main(List<String> args) {
   final int? width = int.tryParse(options['width'] ?? '');
   final double speed = double.parse(options['speed'] ?? '1');
   final double maxIdle = double.parse(options['max-idle'] ?? '1500');
-  final int noise = int.parse(options['noise'] ?? '3');
+  final int noise = int.parse(options['noise'] ?? '5');
 
   final List<Map<String, Object?>> manifest =
       (jsonDecode(File('${folder.path}/frames.json').readAsStringSync())

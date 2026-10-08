@@ -43,7 +43,13 @@ The demo GIF is a real screen recording. Record the app with Cmd+Shift+5 ("Recor
 Portion"), then turn the recording into a GIF:
 
 ```bash
-swift tool/extract_frames.swift recording.mov frames 15 1280
-dart run tool/make_demo_gif.dart frames demo.gif
+swift tool/extract_frames.swift recording.mov frames 15 1280 --from=1.5 --to=42 --crop=0,56,2560,1600
+dart run tool/make_demo_gif.dart frames demo.gif --max-idle=1500
 gifsicle -O3 demo.gif -o demo.gif
 ```
+
+`--from` and `--to` trim the start and the end of the recording, in seconds. `--crop` keeps a
+rectangle of the recording, in its pixels from the top left, for example to drop the macOS title
+bar. `make_demo_gif.dart` removes video compression noise, shortens pauses to `--max-idle`
+milliseconds and can speed the recording up with `--speed`. Every option is described at the top
+of each tool.
