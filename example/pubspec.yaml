@@ -1,0 +1,28 @@
+name: window_stack_example
+description: "Example desktop app for the window_stack package."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # Local package. In your app: window_stack: ^0.0.1
+  window_stack:
+    path: ..
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # Only for tool/make_demo_gif.dart.
+  image: ^4.5.0
+
+flutter:
+  uses-material-design: true

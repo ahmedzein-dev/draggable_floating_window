@@ -1,0 +1,12 @@
+# Demo GIF and README images: linked from GitHub, not shipped in the package.
+assets/
+
+# Everything .gitignore excludes, because a .pubignore replaces it.
+.DS_Store
+.dart_tool/
+.idea/
+*.iml
+/build/
+/coverage/
+/pubspec.lock
+**/doc/api/

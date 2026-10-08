@@ -1,0 +1,46 @@
+name: window_stack
+description: Desktop-style windows inside one Flutter view. Draggable, resizable, priority-stacked windows with per-window dialog stacks and keyboard focus management.
+version: 0.0.1
+homepage: https://github.com/ahmedzein-dev/window_stack
+repository: https://github.com/ahmedzein-dev/window_stack
+issue_tracker: https://github.com/ahmedzein-dev/window_stack/issues
+
+topics:
+  - desktop
+  - window
+  - dialog
+  - widget
+  - ui
+
+screenshots:
+  - description: Several windows in one Flutter view. The active window is highlighted and a calculator with high priority stays on top.
+    path: screenshots/overview.webp
+  - description: A dialog stack inside one window. The second dialog opened from the first; the other windows stay usable.
+    path: screenshots/dialog_stack.webp
+  - description: Light theme with Windows-style buttons, minimized windows in the dock, and a dropdown menu opening above the windows.
+    path: screenshots/light_windows_style.webp
+
+# Pure Dart and Flutter, so every platform works. It is designed for pointer
+# and keyboard use on desktop and the web.
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
