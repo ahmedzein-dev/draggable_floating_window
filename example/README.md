@@ -39,17 +39,19 @@ saved them to:
 flutter test integration_test/screenshots_test.dart -d macos
 ```
 
-The demo GIF is a real screen recording. Record the app with Cmd+Shift+5 ("Record Selected
-Portion"), then turn the recording into a GIF:
+The demo GIF is a real screen recording. Record the app window with Cmd+Shift+5 ("Record
+Selected Portion"), then turn the recording into a GIF. These are the commands that made
+`assets/demo.gif` from a 1918x1050 recording:
 
 ```bash
-swift tool/extract_frames.swift recording.mov frames 15 1280 --from=1.5 --to=42 --crop=0,56,2560,1600
-dart run tool/make_demo_gif.dart frames demo.gif --max-idle=1500
-gifsicle -O3 demo.gif -o demo.gif
+swift tool/extract_frames.swift recording.mov frames 15 --from=0.3 --to=30.8 --crop=0,32,1916,1012
+dart run tool/make_demo_gif.dart frames demo.gif
+gifsicle -O3 demo.gif -o ../assets/demo.gif
 ```
 
 `--from` and `--to` trim the start and the end of the recording, in seconds. `--crop` keeps a
-rectangle of the recording, in its pixels from the top left, for example to drop the macOS title
-bar. `make_demo_gif.dart` removes video compression noise, shortens pauses to `--max-idle`
+rectangle of the recording, in its pixels from the top left: here it drops the 32-pixel macOS title
+bar and the window's border. A fourth number after the frame rate scales the frames to that width.
+`make_demo_gif.dart` removes video compression noise, shortens pauses to `--max-idle`
 milliseconds and can speed the recording up with `--speed`. Every option is described at the top
 of each tool.

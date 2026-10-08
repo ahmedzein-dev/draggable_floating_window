@@ -19,11 +19,11 @@ beyond Flutter. It was extracted from a production Flutter desktop app.
 
 ## Demo
 
-<img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/assets/demo.gif" width="860" alt="Dragging windows, priority stacking, focus switching, a dialog stack inside a window, the dock and maximize" />
+<img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/assets/demo.gif" width="860" alt="Opening, dragging and resizing windows, a calculator kept on top, a dialog stack inside a window, minimizing to the dock, maximizing, and closing a note with unsaved changes" />
 
-*Dragging and stacking windows, the always-on-top calculator, focus switching with the mouse and
-Ctrl+Tab, a dialog stack inside the Tasks window while the other windows stay usable, the dock, and
-closing a note with unsaved changes.*
+*Recorded in the example app: a calculator that stays on top until its pin is turned off, dragging,
+resizing and clicking windows to bring them forward, a dialog stack inside the Tasks window,
+minimizing to the dock, maximizing and restoring, and closing a note with unsaved changes.*
 
 | Overview | Dialog stack | Light theme, Windows-style buttons |
 |:--------:|:------------:|:----------------------------------:|

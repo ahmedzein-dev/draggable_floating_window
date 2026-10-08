@@ -9,10 +9,12 @@
 //   --max-idle=MS    the longest a frame stays on screen when nothing moves;
 //                    longer pauses are shortened to this (default: 1500)
 //   --noise=N        8x8 blocks whose average change is at most N (0-255)
-//                    and whose pixels change by at most 8N keep the previous
+//   --noise-peak=P   and whose pixels change by at most P keep the previous
 //                    frame's pixels. This removes video compression noise,
-//                    so pauses compress well and can be shortened (default:
-//                    5, 0 turns it off)
+//                    so pauses compress well and can be shortened. Raise
+//                    them for noisy recordings; values that are too high
+//                    leave faint traces of moving shadows (defaults: 1 and
+//                    24, --noise=0 --noise-peak=0 turns it off)
 //
 // Every frame shares one palette, so the parts of the screen that do not
 // change encode identically and an optimizer can drop them. Optimize the
@@ -41,7 +43,8 @@ void main(List<String> args) {
   if (positional.length != 2) {
     stderr.writeln(
       'Usage: dart run tool/make_demo_gif.dart <frames folder> <output.gif> '
-      '[--width=PIXELS] [--speed=FACTOR] [--max-idle=MS] [--noise=N]',
+      '[--width=PIXELS] [--speed=FACTOR] [--max-idle=MS] [--noise=N] '
+      '[--noise-peak=P]',
     );
     exit(64);
   }
@@ -50,7 +53,8 @@ void main(List<String> args) {
   final int? width = int.tryParse(options['width'] ?? '');
   final double speed = double.parse(options['speed'] ?? '1');
   final double maxIdle = double.parse(options['max-idle'] ?? '1500');
-  final int noise = int.parse(options['noise'] ?? '5');
+  final double noise = double.parse(options['noise'] ?? '1');
+  final int noisePeak = int.parse(options['noise-peak'] ?? '24');
 
   final List<Map<String, Object?>> manifest =
       (jsonDecode(File('${folder.path}/frames.json').readAsStringSync())
@@ -136,7 +140,7 @@ void main(List<String> args) {
     final double length = (frame['delay']! as int) / speed;
     final Uint8List pixels = image.toUint8List();
     final bool changed = previous == null ||
-        _stabilize(pixels, previous, frameWidth, frameHeight, noise);
+        _stabilize(pixels, previous, frameWidth, frameHeight, noise, noisePeak);
     previous = Uint8List.fromList(pixels);
     if (changed) {
       flush();
@@ -167,18 +171,18 @@ void main(List<String> args) {
 }
 
 /// Copies the 8x8 blocks of [pixels] (RGB) that differ from [previous] by at
-/// most [noise] on average, and by at most eight times that in every channel,
-/// from [previous]. Returns whether any block changed by more.
+/// most [noise] on average and by at most [peak] in every channel from
+/// [previous]. Returns whether any block changed by more.
 bool _stabilize(
   Uint8List pixels,
   Uint8List previous,
   int width,
   int height,
-  int noise,
+  double noise,
+  int peak,
 ) {
   bool changed = false;
   final int stride = width * 3;
-  final int peak = noise * 8;
   for (int top = 0; top < height; top += _block) {
     final int bottom = top + _block < height ? top + _block : height;
     for (int left = 0; left < width; left += _block) {

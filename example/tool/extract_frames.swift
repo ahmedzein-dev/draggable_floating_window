@@ -38,17 +38,33 @@ guard positional.count >= 2 else {
   exit(64)
 }
 let input = URL(fileURLWithPath: positional[0])
+guard FileManager.default.fileExists(atPath: input.path) else {
+  // macOS puts a narrow no-break space before AM/PM in recording names, so a
+  // typed path with a plain space does not match. Tab completion does.
+  print("\(input.path) does not exist")
+  exit(66)
+}
 let output = URL(fileURLWithPath: positional[1], isDirectory: true)
 let fps = positional.count > 2 ? Double(positional[2])! : 15
 let width = positional.count > 3 ? Int(positional[3])! : 0
 
 let asset = AVURLAsset(url: input)
-let duration = try await asset.load(.duration).seconds
-let end = min(to ?? duration, duration)
+// The video track can end before the recording itself (its audio or
+// container runs on), and frames after the last video frame cannot be read.
+guard let track = try await asset.loadTracks(withMediaType: .video).first else {
+  print("\(input.path) has no video track")
+  exit(1)
+}
+let videoEnd = try await track.load(.timeRange).end.seconds
+let end = min(to ?? videoEnd, videoEnd)
 let generator = AVAssetImageGenerator(asset: asset)
 generator.appliesPreferredTrackTransform = true
 generator.requestedTimeToleranceBefore = .zero
 generator.requestedTimeToleranceAfter = .zero
+let retry = AVAssetImageGenerator(asset: asset)
+retry.appliesPreferredTrackTransform = true
+retry.requestedTimeToleranceBefore = .zero
+retry.requestedTimeToleranceAfter = .zero
 
 let sRGB = CGColorSpace(name: CGColorSpace.sRGB)!
 
@@ -76,10 +92,29 @@ let times = (0..<count).map { CMTime(seconds: from + Double($0) / fps, preferred
 let delay = Int((1000 / fps).rounded())
 var frames: [[String: Any]] = []
 var index = 0
+var previous: CGImage?
 // Requesting all the times at once lets the generator decode the video in
 // order instead of seeking for every frame.
 for await result in generator.images(for: times) {
-  let image = try result.image
+  let image: CGImage
+  do {
+    image = prepare(try result.image)
+  } catch {
+    // The batch request sometimes fails on a frame that decodes on its own.
+    // If that fails too, the frame repeats the one before it.
+    if let single = try? await retry.image(at: result.requestedTime).image {
+      image = prepare(single)
+    } else if let previous {
+      print(
+        String(
+          format: "Cannot decode the frame at %.2f s, repeating the previous one",
+          result.requestedTime.seconds))
+      image = previous
+    } else {
+      throw error
+    }
+  }
+  previous = image
   let name = String(format: "frame_%04d.png", index)
   guard
     let destination = CGImageDestinationCreateWithURL(
@@ -92,7 +127,7 @@ for await result in generator.images(for: times) {
     print("Cannot write \(name)")
     exit(1)
   }
-  CGImageDestinationAddImage(destination, prepare(image), nil)
+  CGImageDestinationAddImage(destination, image, nil)
   CGImageDestinationFinalize(destination)
   frames.append(["file": name, "delay": delay])
   index += 1

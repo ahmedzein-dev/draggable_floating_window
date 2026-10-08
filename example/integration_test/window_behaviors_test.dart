@@ -278,8 +278,18 @@ void main() {
           .at(1),
     );
     expect(find.text('4 of 5 done'), findsOneWidget);
-    await clickOn(buttonOf(frameOf('Tasks'), 'Minimize'));
+    // Rest on the button until its tooltip shows, as a user often does. The
+    // tooltip must not stay on screen after the window is minimized.
+    final Offset minimize = tester.getCenter(
+      buttonOf(frameOf('Tasks'), 'Minimize'),
+    );
+    await moveMouse(minimize);
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    expect(find.text('Minimize'), findsOneWidget);
+    await click(minimize);
     expect(tasks.isMinimized, isTrue);
+    expect(find.text('Minimize', skipOffstage: false), findsNothing);
     expect(find.byType(TasksWindow), findsNothing);
     expect(windows.activeWindow, isNot(tasks));
     final Finder dockBar = find.byType(MinimizedWindowBar);

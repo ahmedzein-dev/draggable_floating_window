@@ -340,6 +340,101 @@ void main() {
       expect(window.bounds, const Rect.fromLTWH(100, 100, 400, 300));
     });
 
+    testWidgets('minimizing with the button hides its tooltip',
+        (WidgetTester tester) async {
+      final WindowStackController controller = await _pumpStack(tester);
+      final WindowEntry window = _open(controller, 'Notes');
+      await tester.pump();
+
+      // Hover the minimize button until its tooltip shows, then click it.
+      final Offset button = tester.getCenter(_buttonOf('Notes', 'Minimize'));
+      final TestGesture mouse =
+          await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await mouse.addPointer(location: Offset.zero);
+      addTearDown(mouse.removePointer);
+      await mouse.moveTo(button);
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+      expect(find.text('Minimize'), findsOneWidget);
+
+      await mouse.down(button);
+      await mouse.up();
+      await _settle(tester);
+      expect(window.isMinimized, isTrue);
+      // The tooltip belongs to the hidden window but paints in the root
+      // overlay, so look for it offstage too.
+      expect(find.text('Minimize', skipOffstage: false), findsNothing);
+    });
+
+    testWidgets('minimizing hides tooltips shown inside the window',
+        (WidgetTester tester) async {
+      final WindowStackController controller = await _pumpStack(tester);
+      final WindowEntry window = _open(
+        controller,
+        'Notes',
+        builder: (BuildContext context) => Center(
+          child: IconButton(
+            tooltip: 'Save',
+            icon: const Icon(Icons.save),
+            onPressed: () {},
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final TestGesture mouse =
+          await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await mouse.addPointer(location: Offset.zero);
+      addTearDown(mouse.removePointer);
+      await mouse.moveTo(tester.getCenter(find.byIcon(Icons.save)));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+      expect(find.text('Save'), findsOneWidget);
+
+      // A shortcut or the app minimizes the window while the pointer still
+      // rests on the button.
+      window.minimize();
+      await _settle(tester);
+      expect(find.text('Save', skipOffstage: false), findsNothing);
+
+      // The tooltip works again after the window is restored.
+      window.restore();
+      await _settle(tester);
+      await mouse.moveTo(Offset.zero);
+      await tester.pumpAndSettle();
+      await mouse.moveTo(tester.getCenter(find.byIcon(Icons.save)));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+      expect(find.text('Save'), findsOneWidget);
+    });
+
+    testWidgets('minimizing hides a tooltip that was shown from code',
+        (WidgetTester tester) async {
+      final WindowStackController controller = await _pumpStack(tester);
+      final GlobalKey<TooltipState> tooltip = GlobalKey<TooltipState>();
+      final WindowEntry window = _open(
+        controller,
+        'Notes',
+        builder: (BuildContext context) => Center(
+          child: Tooltip(
+            key: tooltip,
+            message: 'Unsaved changes',
+            triggerMode: TooltipTriggerMode.manual,
+            child: const Text('Draft'),
+          ),
+        ),
+      );
+      await tester.pump();
+      tooltip.currentState!.ensureTooltipVisible();
+      await tester.pumpAndSettle();
+      expect(find.text('Unsaved changes'), findsOneWidget);
+
+      // No pointer will dismiss this tooltip, so minimizing has to.
+      window.minimize();
+      await _settle(tester);
+      expect(find.text('Unsaved changes', skipOffstage: false), findsNothing);
+    });
+
     testWidgets('dock slots fill from the start and reuse freed slots',
         (WidgetTester tester) async {
       final WindowStackController controller = await _pumpStack(tester);

@@ -36,14 +36,80 @@ class _WindowLayer extends StatelessWidget {
             // restoring it brings back its state, scroll position and input.
             visible: !minimized,
             maintainState: true,
-            child: ExcludeFocus(
-              excluding: minimized || blocked,
-              child: RepaintBoundary(child: frame),
+            // _MinimizedTickerMode stops the animations instead.
+            maintainAnimation: true,
+            child: _MinimizedTickerMode(
+              minimized: minimized,
+              child: ExcludeFocus(
+                excluding: minimized || blocked,
+                child: RepaintBoundary(child: frame),
+              ),
             ),
           ),
         );
       },
       child: _WindowFrame(window: window, titleBarBuilder: titleBarBuilder),
+    );
+  }
+}
+
+/// Stops the animations of a minimized window, a moment after it is
+/// minimized so that what was animating out can finish first.
+///
+/// Tooltips need this: a tooltip paints in the root overlay, outside the
+/// hidden window, and removes itself only when its fade-out finishes. Without
+/// it, the tooltip of the minimize button stays on screen.
+class _MinimizedTickerMode extends StatefulWidget {
+  const _MinimizedTickerMode({required this.minimized, required this.child});
+
+  final bool minimized;
+  final Widget child;
+
+  @override
+  State<_MinimizedTickerMode> createState() => _MinimizedTickerModeState();
+}
+
+class _MinimizedTickerModeState extends State<_MinimizedTickerMode> {
+  /// Longer than a tooltip's fade-out.
+  static const Duration _settleDuration = Duration(milliseconds: 300);
+
+  Timer? _settling;
+
+  @override
+  void didUpdateWidget(_MinimizedTickerMode oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.minimized == oldWidget.minimized) {
+      return;
+    }
+    _settling?.cancel();
+    _settling = null;
+    if (widget.minimized) {
+      _settling = Timer(_settleDuration, () {
+        if (mounted) {
+          setState(() => _settling = null);
+        }
+      });
+      // A tooltip under a pointer that stays still would not dismiss itself.
+      // Dismissing starts an animation, so wait until this build is done.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && widget.minimized) {
+          Tooltip.dismissAllToolTips();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _settling?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TickerMode(
+      enabled: !widget.minimized || _settling != null,
+      child: widget.child,
     );
   }
 }
