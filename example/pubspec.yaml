@@ -1,5 +1,5 @@
-name: window_stack_example
-description: "Example desktop app for the window_stack package."
+name: draggable_floating_window_example
+description: "Example desktop app for the draggable_floating_window package."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  # Local package. In your app: window_stack: ^0.0.1
-  window_stack:
+  # Local package. In your app: draggable_floating_window: ^0.0.1
+  draggable_floating_window:
     path: ..
 
 dev_dependencies:

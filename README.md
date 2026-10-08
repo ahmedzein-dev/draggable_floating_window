@@ -1,24 +1,25 @@
-# Window Stack
+# Draggable Floating Window
 
-[![Pub Version](https://img.shields.io/pub/v/window_stack.svg)](https://pub.dev/packages/window_stack)
-[![Pub Points](https://img.shields.io/pub/points/window_stack)](https://pub.dev/packages/window_stack/score)
-[![Likes](https://img.shields.io/pub/likes/window_stack)](https://pub.dev/packages/window_stack/score)
+[![Pub Version](https://img.shields.io/pub/v/draggable_floating_window.svg)](https://pub.dev/packages/draggable_floating_window)
+[![Pub Points](https://img.shields.io/pub/points/draggable_floating_window)](https://pub.dev/packages/draggable_floating_window/score)
+[![Likes](https://img.shields.io/pub/likes/draggable_floating_window)](https://pub.dev/packages/draggable_floating_window/score)
 
-`WindowStack` — a desktop windowing layer for Flutter. Floating, draggable, priority-stacked windows
-with their own dialog stacks and keyboard focus management, all inside one Flutter view.
+Floating, draggable, resizable windows inside your Flutter app. A desktop windowing layer with
+priority-stacked windows, their own dialog stacks and keyboard focus management, all in one Flutter
+view. Everything starts with the `WindowStack` widget.
 
 Out of the box, a Flutter desktop app runs in a single window, and Flutter has no widget for windows
 *inside* it. Back-office tools, admin consoles and accounting apps need that layer: operators keep
 an invoice, a statement and two lookups open at once, switch between them all day, and expect each
-one to behave like a native window. `window_stack` adds that layer with no dependencies beyond
-Flutter. It was extracted from a production Flutter desktop app.
+one to behave like a native window. `draggable_floating_window` adds that layer with no dependencies
+beyond Flutter. It was extracted from a production Flutter desktop app.
 
 > The windows are widgets in your app's single Flutter view (an in-app, MDI-style window manager).
 > They do not create operating-system windows. See [Platform notes](#platform-notes-and-limitations).
 
 ## Demo
 
-<img src="https://raw.githubusercontent.com/ahmedzein-dev/window_stack/main/assets/demo.gif" width="860" alt="Dragging windows, priority stacking, focus switching, a dialog stack inside a window, the dock and maximize" />
+<img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/assets/demo.gif" width="860" alt="Dragging windows, priority stacking, focus switching, a dialog stack inside a window, the dock and maximize" />
 
 *Dragging and stacking windows, the always-on-top calculator, focus switching with the mouse and
 Ctrl+Tab, a dialog stack inside the Tasks window while the other windows stay usable, the dock, and
@@ -26,7 +27,7 @@ closing a note with unsaved changes.*
 
 | Overview | Dialog stack | Light theme, Windows-style buttons |
 |:--------:|:------------:|:----------------------------------:|
-| <img src="https://raw.githubusercontent.com/ahmedzein-dev/window_stack/main/screenshots/overview.webp" width="280" alt="Several windows, the active one highlighted, a calculator kept on top" /> | <img src="https://raw.githubusercontent.com/ahmedzein-dev/window_stack/main/screenshots/dialog_stack.webp" width="280" alt="Two stacked dialogs inside the Tasks window" /> | <img src="https://raw.githubusercontent.com/ahmedzein-dev/window_stack/main/screenshots/light_windows_style.webp" width="280" alt="Light theme, Windows-style buttons, minimized windows in the dock and a dropdown open above the windows" /> |
+| <img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/screenshots/overview.webp" width="280" alt="Several windows, the active one highlighted, a calculator kept on top" /> | <img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/screenshots/dialog_stack.webp" width="280" alt="Two stacked dialogs inside the Tasks window" /> | <img src="https://raw.githubusercontent.com/ahmedzein-dev/draggable_floating_window/main/screenshots/light_windows_style.webp" width="280" alt="Light theme, Windows-style buttons, minimized windows in the dock and a dropdown open above the windows" /> |
 
 ## Features
 
@@ -68,7 +69,7 @@ closing a note with unsaved changes.*
 ## Installation
 
 ```bash
-flutter pub add window_stack
+flutter pub add draggable_floating_window
 ```
 
 ---
@@ -79,7 +80,7 @@ Create a `WindowStackController`, put a `WindowStack` in your page, and open win
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 class Workspace extends StatefulWidget {
   const Workspace({super.key});
@@ -410,7 +411,7 @@ WindowStack(
 
 Several packages offer draggable, resizable panels inside a Flutter app, such as
 `draggable_overlay_window`, `simple_floating_panel`, `panel_view`, `flutter_mdi_gui` and
-`floating_windows`. Compare them for your case. `window_stack` focuses on many windows at once:
+`floating_windows`. Compare them for your case. `draggable_floating_window` focuses on many windows at once:
 priority bands, dialog stacks per window with `Navigator.pop` support, focus memory and handoff,
 keyboard shortcuts, and a minimized dock.
 
@@ -418,7 +419,7 @@ keyboard shortcuts, and a minimized dock.
 
 ## 📌 Full Example
 
-The [example app](https://github.com/ahmedzein-dev/window_stack/tree/main/example) is a small
+The [example app](https://github.com/ahmedzein-dev/draggable_floating_window/tree/main/example) is a small
 "Workspace" desktop: notes with close confirmation, a task list with a dialog stack, an always-on-top
 calculator, an activity window that shows the stacking order live, and settings for theme and
 window buttons. It runs on macOS, Windows, Linux and the web.
@@ -434,9 +435,9 @@ Contributions are welcome! If you find a bug or have a feature request, please o
 
 ## 🙌 Support
 
-- 🐛 **Bug reports:** Please open issues on [GitHub Issues](https://github.com/ahmedzein-dev/window_stack/issues)
-- 💡 **Feature requests:** Share your ideas on [GitHub Discussions](https://github.com/ahmedzein-dev/window_stack/discussions)
-- ⭐ **Enjoying this package?** Please give it a star on [GitHub](https://github.com/ahmedzein-dev/window_stack) or like it on [pub.dev](https://pub.dev/packages/window_stack)
+- 🐛 **Bug reports:** Please open issues on [GitHub Issues](https://github.com/ahmedzein-dev/draggable_floating_window/issues)
+- 💡 **Feature requests:** Share your ideas on [GitHub Discussions](https://github.com/ahmedzein-dev/draggable_floating_window/discussions)
+- ⭐ **Enjoying this package?** Please give it a star on [GitHub](https://github.com/ahmedzein-dev/draggable_floating_window) or like it on [pub.dev](https://pub.dev/packages/draggable_floating_window)
 
 ## License
 

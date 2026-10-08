@@ -148,7 +148,9 @@ class _DialogStack {
 /// instead of the page that holds the [WindowStack].
 class _WindowDialogRoute<T> extends ModalRoute<T> {
   _WindowDialogRoute(this.request)
-      : super(settings: const RouteSettings(name: 'window_stack_dialog'));
+      : super(
+            settings:
+                const RouteSettings(name: 'draggable_floating_window_dialog'));
 
   final _DialogRequest<T> request;
 

@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 const Size _surface = Size(1000, 700);
 

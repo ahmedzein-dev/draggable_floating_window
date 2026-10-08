@@ -2,7 +2,7 @@
 //
 //   flutter test integration_test/screenshots_test.dart -d macos
 //
-// The PNG files go to a `window_stack_screenshots` folder in the app's
+// The PNG files go to a `readme_screenshots` folder in the app's
 // temporary directory; the test prints the path. The app is laid out at
 // 1280x800 and scaled to fit the window, so the size of the macOS window does
 // not matter.
@@ -14,10 +14,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:window_stack/window_stack.dart';
-import 'package:window_stack_example/desktop/desktop_background.dart';
-import 'package:window_stack_example/main.dart';
-import 'package:window_stack_example/windows/notes_window.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
+import 'package:draggable_floating_window_example/desktop/desktop_background.dart';
+import 'package:draggable_floating_window_example/main.dart';
+import 'package:draggable_floating_window_example/windows/notes_window.dart';
 
 const Size _canvas = Size(1280, 800);
 
@@ -26,9 +26,9 @@ void main() {
 
   testWidgets('saves the screenshots', (WidgetTester tester) async {
     final Directory folder = Directory(
-      '${Directory.systemTemp.path}/window_stack_screenshots',
+      '${Directory.systemTemp.path}/readme_screenshots',
     )..createSync(recursive: true);
-    debugPrint('WINDOW_STACK_SCREENSHOTS=${folder.path}');
+    debugPrint('SCREENSHOTS_FOLDER=${folder.path}');
     final GlobalKey boundary = GlobalKey();
 
     await tester.pumpWidget(

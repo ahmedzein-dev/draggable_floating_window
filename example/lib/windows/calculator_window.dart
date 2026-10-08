@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 /// Toggles the enclosing window between [WindowPriority.high] ("keep on
 /// top") and [WindowPriority.normal]. Used as a title bar action.

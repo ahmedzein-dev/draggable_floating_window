@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 /// Lists the open windows from front to back, the way they are stacked, and
 /// drives them through their [WindowEntry].

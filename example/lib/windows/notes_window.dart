@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 /// The data behind one note window, shared with its close confirmation.
 class NoteDocument {

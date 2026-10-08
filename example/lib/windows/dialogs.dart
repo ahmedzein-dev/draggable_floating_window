@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 /// Asked by a note window before it closes with unsaved changes.
 class DiscardChangesDialog extends StatelessWidget {
@@ -124,8 +124,9 @@ class AboutWorkspaceDialog extends StatelessWidget {
       content: const SizedBox(
         width: 340,
         child: Text(
-          'An example desktop built with the window_stack package. This is a '
-          'stack-level dialog: every window is blocked until it closes. '
+          'An example desktop built with the draggable_floating_window '
+          'package. This is a stack-level dialog: every window is blocked '
+          'until it closes. '
           'Window dialogs, like the ones in Tasks and Notes, block only their '
           'own window.',
         ),

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "io.github.ahmedzein" "\0"
-            VALUE "FileDescription", "window_stack_example" "\0"
+            VALUE "FileDescription", "draggable_floating_window_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "window_stack_example" "\0"
+            VALUE "InternalName", "draggable_floating_window_example" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 io.github.ahmedzein. All rights reserved." "\0"
-            VALUE "OriginalFilename", "window_stack_example.exe" "\0"
-            VALUE "ProductName", "window_stack_example" "\0"
+            VALUE "OriginalFilename", "draggable_floating_window_example.exe" "\0"
+            VALUE "ProductName", "draggable_floating_window_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

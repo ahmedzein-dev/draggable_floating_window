@@ -8,11 +8,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:window_stack/window_stack.dart';
-import 'package:window_stack_example/desktop/desktop_background.dart';
-import 'package:window_stack_example/main.dart';
-import 'package:window_stack_example/windows/notes_window.dart';
-import 'package:window_stack_example/windows/tasks_window.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
+import 'package:draggable_floating_window_example/desktop/desktop_background.dart';
+import 'package:draggable_floating_window_example/main.dart';
+import 'package:draggable_floating_window_example/windows/notes_window.dart';
+import 'package:draggable_floating_window_example/windows/tasks_window.dart';
 
 /// A resize handle: where to grab it, its cursor, and the expected bounds
 /// after dragging it by a delta.

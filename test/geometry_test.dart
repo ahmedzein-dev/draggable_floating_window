@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:window_stack/src/geometry.dart';
-import 'package:window_stack/window_stack.dart';
+import 'package:draggable_floating_window/src/geometry.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
 
 void main() {
   const Rect bounds = Rect.fromLTWH(0, 0, 1000, 800);

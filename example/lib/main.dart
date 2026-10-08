@@ -32,7 +32,7 @@ class _ExampleAppState extends State<ExampleApp> {
         listenable: _settings,
         builder: (BuildContext context, Widget? child) {
           return MaterialApp(
-            title: 'window_stack example',
+            title: 'draggable_floating_window example',
             debugShowCheckedModeBanner: false,
             themeMode: _settings.themeMode,
             theme: _settings.theme(Brightness.light),

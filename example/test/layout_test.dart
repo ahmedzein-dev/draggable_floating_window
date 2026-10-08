@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:window_stack/window_stack.dart';
-import 'package:window_stack_example/main.dart';
-import 'package:window_stack_example/windows/notes_window.dart';
-import 'package:window_stack_example/windows/settings_window.dart';
+import 'package:draggable_floating_window/draggable_floating_window.dart';
+import 'package:draggable_floating_window_example/main.dart';
+import 'package:draggable_floating_window_example/windows/notes_window.dart';
+import 'package:draggable_floating_window_example/windows/settings_window.dart';
 
 /// Flutter reports any overflow as a test failure, so these tests check that
 /// nothing overflows at the smallest app window the macOS runner allows, with

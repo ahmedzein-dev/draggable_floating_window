@@ -1,7 +1,7 @@
-# window_stack example
+# draggable_floating_window example
 
 A small "Workspace" desktop that shows every feature of
-[window_stack](https://pub.dev/packages/window_stack): different window types,
+[draggable_floating_window](https://pub.dev/packages/draggable_floating_window): different window types,
 an always-on-top window, the active-window highlight, window dialog stacks,
 stack-level dialogs, the minimized dock and keyboard shortcuts.
 

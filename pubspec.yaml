@@ -1,16 +1,16 @@
-name: window_stack
-description: Desktop-style windows inside one Flutter view. Draggable, resizable, priority-stacked windows with per-window dialog stacks and keyboard focus management.
+name: draggable_floating_window
+description: Draggable, resizable floating windows inside your Flutter app. Desktop-style window layer with minimize, maximize, priority stacking, dialog stacks and keyboard focus.
 version: 0.0.1
-homepage: https://github.com/ahmedzein-dev/window_stack
-repository: https://github.com/ahmedzein-dev/window_stack
-issue_tracker: https://github.com/ahmedzein-dev/window_stack/issues
+homepage: https://github.com/ahmedzein-dev/draggable_floating_window
+repository: https://github.com/ahmedzein-dev/draggable_floating_window
+issue_tracker: https://github.com/ahmedzein-dev/draggable_floating_window/issues
 
 topics:
-  - desktop
   - window
+  - floating
+  - draggable
+  - desktop
   - dialog
-  - widget
-  - ui
 
 screenshots:
   - description: Several windows in one Flutter view. The active window is highlighted and a calculator with high priority stays on top.

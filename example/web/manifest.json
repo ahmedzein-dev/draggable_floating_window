@@ -1,11 +1,11 @@
 {
-    "name": "window_stack example",
-    "short_name": "window_stack",
+    "name": "draggable_floating_window example",
+    "short_name": "Workspace",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Example desktop app for the window_stack package.",
+    "description": "Example desktop app for the draggable_floating_window package.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
